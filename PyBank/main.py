@@ -4,9 +4,13 @@ import os
 import csv 
 
 #create file path to csv
+###need to bugfix relative path, why is cwd cwils###
+#cwd = os.getcwd()
+#budgetpath = os.path.join("resources","budget_data.csv")
+budgetpath = r"C:\Users\cwils\OneDrive\Desktop\dabootcamp\python-challenge\PyBank\resources\budget_data.csv"
 
-#budgetpath = os.path.join(r"\Resources\budget_data.csv")
-budgetpath = r"C:\Users\cwils\OneDrive\Desktop\dabootcamp\python-challenge\PyBank\Resources\budget_data.csv"
+#output = os.path.join("analysis", "budget_analysis.txt")
+output = r"C:\Users\cwils\OneDrive\Desktop\dabootcamp\python-challenge\PyBank\analysis\budget_analysis.txt"
 
 #declare variables
 
@@ -56,5 +60,6 @@ with open(budgetpath, 'r') as csv_file:
 print(f'Financial Analysis{new_line}---------------------------- {new_line}Total Months: {months}{new_line}Total: ${net_total} {new_line}Average Change: ${average} {new_line}Greatest Increase in Profits: {greatest_month} (${greatest_value}) {new_line}Greatest Decrease in Profits: {lowest_month} (${lowest_value})')
 
 #export text file with results
-with open("results.txt", "w") as f:
-    f.write("hi")
+with open(output, "w") as f:
+    analysis = (f'Financial Analysis{new_line}---------------------------- {new_line}Total Months: {months}{new_line}Total: ${net_total} {new_line}Average Change: ${average} {new_line}Greatest Increase in Profits: {greatest_month} (${greatest_value}) {new_line}Greatest Decrease in Profits: {lowest_month} (${lowest_value})')
+    f.write(analysis)

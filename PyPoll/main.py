@@ -4,15 +4,18 @@ import os
 import csv 
 
 #create file path to csv
+###need to bugfix relative path###
+#electionpath = os.path.join("resources", "election_data.csv")
+electionpath = r"C:\Users\cwils\OneDrive\Desktop\dabootcamp\python-challenge\PyPoll\resources\election_data.csv"
 
-#electionpath = os.path.join("Resources", "election_data.csv")
-electionpath = r"C:\Users\cwils\OneDrive\Desktop\dabootcamp\python-challenge\PyPoll\Resources\election_data.csv"
+output =r"C:\Users\cwils\OneDrive\Desktop\dabootcamp\python-challenge\PyPoll\analysis\election_analysis.txt"
 
 #declare variables
 
 new_line = "\n"
 tvotes = 0
 winner = ""
+winning_count = 0
 
 #create candidate list and votes dictionary
 
@@ -43,11 +46,38 @@ with open(electionpath, 'r') as csv_file:
 
         votes[name] += 1
 
+#open new txt file to write
 
-#print out election results  
+with open(output, "w") as f:
 
-#print(f'Election Results{new_line}----------------------------{new_line}Total Votes: {tvotes}{new_line}----------------------------{new_line}Charles Casper Stockham:{stockhampercent}% ({stockhamvote}){new_line}Diana DeGette:{degettepercent}% ({degettevote}){new_line}Raymon Anthony Doane:{doanepercent}% ({doanevote}){new_line}----------------------------{new_line}Winner: {winner}{new_line}----------------------------{new_line}')
+    #create election results variable to print and write total votes
 
-# #export text file with results
-# with open("results.txt", "w") as f:
-#     f.write("hi")
+    election_results = (f'Election Results{new_line}----------------------------{new_line}Total Votes: {tvotes}{new_line}----------------------------{new_line}')
+    print(election_results)
+    f.write(election_results)
+
+    #loop through candidate in list to determine vote count and percent per candidate, print out and write
+
+    for candidate in votes: 
+
+        vote_count = votes[candidate]
+        
+        vote_percentage = float(vote_count) / float(tvotes) * 100
+        
+        candidate_results = (f'{candidate}: {vote_percentage:.1f}% ({vote_count:,}){new_line}')
+        print(candidate_results)
+        f.write(candidate_results)
+
+        
+        #Determine winner by testing all vote counts against each other and saving candidate as winner
+              
+        if (vote_count > winning_count): 
+    
+             winning_count = vote_count
+             winner = candidate
+
+    #save winner results string, print and write
+
+    winner_results = (f'-----------------------{new_line}Winner: {winner}{new_line}-----------------------')
+    print(winner_results)
+    f.write(winner_results)
