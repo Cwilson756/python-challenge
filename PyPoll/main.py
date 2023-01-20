@@ -3,12 +3,10 @@
 import os
 import csv 
 
-#create file path to csv
-###need to bugfix relative path###
-#electionpath = os.path.join("resources", "election_data.csv")
-electionpath = r"C:\Users\cwils\OneDrive\Desktop\dabootcamp\python-challenge\PyPoll\resources\election_data.csv"
+#create file path to csv and output file
 
-output =r"C:\Users\cwils\OneDrive\Desktop\dabootcamp\python-challenge\PyPoll\analysis\election_analysis.txt"
+electionpath = os.path.join("PyPoll","resources", "election_data.csv")
+output = os.path.join("PyPoll","resources","election_analysis.txt")
 
 #declare variables
 

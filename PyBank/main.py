@@ -4,13 +4,9 @@ import os
 import csv 
 
 #create file path to csv
-###need to bugfix relative path, why is cwd cwils###
-#cwd = os.getcwd()
-#budgetpath = os.path.join("resources","budget_data.csv")
-budgetpath = r"C:\Users\cwils\OneDrive\Desktop\dabootcamp\python-challenge\PyBank\resources\budget_data.csv"
 
-#output = os.path.join("analysis", "budget_analysis.txt")
-output = r"C:\Users\cwils\OneDrive\Desktop\dabootcamp\python-challenge\PyBank\analysis\budget_analysis.txt"
+budgetpath = os.path.join("PyBank","resources","budget_data.csv")
+output = os.path.join("PyBank", "analysis", "budget_analysis.txt")
 
 #declare variables
 
