@@ -11,13 +11,16 @@ output = os.path.join("PyBank", "analysis", "budget_analysis.txt")
 #declare variables
 
 net_total = 0
-greatest_value = 0
 greatest_month = str("")
-lowest_value = 0
 lowest_month = str("")
 new_line = "\n"
-average = 0
+average_change = 0
 months = 0
+past_month = 0
+current_month = 0
+monthly_change = 0
+n = 0
+changes = {}
 
 #open and read csv file
 
@@ -37,25 +40,31 @@ with open(budgetpath, 'r') as csv_file:
 
         net_total += int(row[1])
 
-        #determine average by taking net total and dividing by months (each profit loss is acompanied by a month)
+        #if it is the first month save the current month but perform no calculations
 
-        average = int(net_total/months)
+        if months == 1:
+            current_month = int(row[1])
 
-        #save the lowest and highest value changes and month of said change
+        #save current and past month, calculate monthly change, add it to a list
+            
+        else:
+            past_month = current_month
+            current_month = int(row[1])
+            monthly_change = (current_month - past_month)
+            changes.update({row[0]:monthly_change})
 
-        if int(row[1]) > greatest_value:
-            greatest_value = int(row[1])
-            greatest_month = row[0]
+#calculate average change and find greatest and lowest change months
 
-        if int(row[1]) < lowest_value:
-            lowest_value = int(row[1])
-            lowest_month = row[0]
+average_change = round((sum(changes.values()) / len(changes)), 2)
+
+lowest_month = min(changes.items(), key=lambda x: x[1])
+greatest_month = max(changes.items(), key=lambda x: x[1])
 
 #print out financial analysis    
 
-print(f'Financial Analysis{new_line}---------------------------- {new_line}Total Months: {months}{new_line}Total: ${net_total} {new_line}Average Change: ${average} {new_line}Greatest Increase in Profits: {greatest_month} (${greatest_value}) {new_line}Greatest Decrease in Profits: {lowest_month} (${lowest_value})')
+print(f'Financial Analysis{new_line}---------------------------- {new_line}Total Months: {months}{new_line}Total: ${net_total} {new_line}Average Change: ${average_change} {new_line}Greatest Increase in Profits: {greatest_month[0]} (${greatest_month[1]}) {new_line}Greatest Decrease in Profits: {lowest_month[0]} (${lowest_month[1]})')
 
 #export text file with results
 with open(output, "w") as f:
-    analysis = (f'Financial Analysis{new_line}---------------------------- {new_line}Total Months: {months}{new_line}Total: ${net_total} {new_line}Average Change: ${average} {new_line}Greatest Increase in Profits: {greatest_month} (${greatest_value}) {new_line}Greatest Decrease in Profits: {lowest_month} (${lowest_value})')
+    analysis = (f'Financial Analysis{new_line}---------------------------- {new_line}Total Months: {months}{new_line}Total: ${net_total} {new_line}Average Change: ${average_change} {new_line}Greatest Increase in Profits: {greatest_month[0]} (${greatest_month[1]}) {new_line}Greatest Decrease in Profits: {lowest_month[0]} (${lowest_month[1]})')
     f.write(analysis)
